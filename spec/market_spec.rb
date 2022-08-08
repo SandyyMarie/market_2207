@@ -17,6 +17,7 @@ RSpec.describe Market do
         @vendor2.stock(@item4, 50)
         @vendor2.stock(@item3, 25)
         @vendor3.stock(@item1, 65)
+        @vendor3.stock(@item3, 10)
     end
 
     it 'exists' do
@@ -50,4 +51,24 @@ RSpec.describe Market do
         expect(@market.vendor_that_sell(@item4)).to eq([@vendor2])
     end
 
+    it 'can return the total inventory' do
+        @market.add_vendor(@vendor1)
+        @market.add_vendor(@vendor2)
+        @market.add_vendor(@vendor3)
+        expect(@market.total_inventory.count).to eq(4)
+    end
+
+    it 'can return the items that are overstocked' do
+        @market.add_vendor(@vendor1)
+        @market.add_vendor(@vendor2)
+        @market.add_vendor(@vendor3)
+        expect(@market.overstocked_items).to eq([@item1])
+    end
+
+    it 'can return the sorted item list' do
+        @market.add_vendor(@vendor1)
+        @market.add_vendor(@vendor2)
+        @market.add_vendor(@vendor3)
+        expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach", "Peach-Raspberry Nice Cream", "Tomato"])
+    end
 end
