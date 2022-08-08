@@ -52,14 +52,23 @@ RSpec.describe Market do
     end
 
     it 'can return the total inventory' do
-        expect(@market.total_inventory).to eq({@item1, @item2, @item3, @item4})
+        @market.add_vendor(@vendor1)
+        @market.add_vendor(@vendor2)
+        @market.add_vendor(@vendor3)
+        expect(@market.total_inventory.count).to eq(4)
     end
 
     it 'can return the items that are overstocked' do
-        expect(@market.overstocked_items).to eq(@item1)
+        @market.add_vendor(@vendor1)
+        @market.add_vendor(@vendor2)
+        @market.add_vendor(@vendor3)
+        expect(@market.overstocked_items).to eq([@item1])
     end
 
     it 'can return the sorted item list' do
+        @market.add_vendor(@vendor1)
+        @market.add_vendor(@vendor2)
+        @market.add_vendor(@vendor3)
         expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach", "Peach-Raspberry Nice Cream", "Tomato"])
     end
 end
